@@ -10,7 +10,7 @@
 
      (is (= (group-by-header [["juno" "jade" "v00"]
                               ["juno" "jade" "v01"]
-                              ["juno" "jedi" "v01"]
+                              ["juno" "jedi" "v00"]
                               ["juno" "jedi" "v01"]])
             {"juno" {"jade" ["v00"
                              "v01"]
