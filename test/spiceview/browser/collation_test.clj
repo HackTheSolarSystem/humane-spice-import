@@ -8,14 +8,16 @@
   header-test
   (testing "It can find a common header"
 
-     (is (= (group-by-header [["juno" "jade" "v00"]
-                              ["juno" "jade" "v01"]
-                              ["juno" "jedi" "v00"]
-                              ["juno" "jedi" "v01"]])
-            {"juno" {"jade" ["v00"
+     (is (=
+           {"juno" {"jade" ["v00"
                              "v01"]
                      "jedi" ["v00"
                              "v01"]}}
+           (group-by-header [["juno" "jade" "v00"]
+                              ["juno" "jade" "v01"]
+                              ["juno" "jedi" "v00"]
+                              ["juno" "jedi" "v01"]])
+
              )
          )
 

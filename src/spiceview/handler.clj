@@ -2,6 +2,7 @@
   (:require
     [aleph.http :as http]
     [compojure.core :as compojure :refer [GET POST]]
+    [clojure.string :as str]
     [compojure.route :as route]
     [ring.middleware.params :as params]
     [hiccup.core :as hiccup :refer [html]]
@@ -26,15 +27,54 @@
   (html
     [:div
 
-     (format "this is a submodule: %s from mission: %s" submodule mission)
+     ;; (format "this is a submodule: %s from mission: %s" submodule mission)
+     (if (= submodule "ck")
+       (let [grouped-data (->> (fs/submodule-contents "JUNO" "ck")
+                               (map last)
+                               (map #(.getName %))
+                               (map #(str/split % #"[._]"))
+                               (group-by (partial take 3)))]
+         [:div
+          [:form
+           [:input {:name "begin" :type "date"}
+            [:label "Begin Date"]]
+           [:br]
+           [:input {:name "begin" :type "date"}
+            [:label "End Date"]]
 
-     [:h2 "List:"]
-     [:ul
-      (for [[n f] (fs/submodule-contents mission submodule)]
-        [:li
-         [:a {:href "//google.com"} n]])]
-     ]
-     ))
+           [:br]
+           [:input {:value "hide-older" :name "vehicle1" :type "checkbox"}
+            "Hide redundant older versions"]]
+
+
+          [:form
+           {:action "/action_page.php"}
+
+           [:select
+            {:multiple "multiple" :name "group" }
+            (for [[n f] grouped-data]
+              (let [s (str/join n "_")]
+              [:option {:value n} n]))]
+
+           [:select
+            {:multiple "multiple" :name "files" }
+            (for [n (first (vals grouped-data))
+                  ;;[n f] (fs/submodule-contents mission submodule)
+                  ]
+              [:option {:value n} ])]
+
+           ]
+          ])
+       [:div
+        [:h2 "List:"]
+        [:ul
+         (for [[n f] (fs/submodule-contents mission submodule)]
+           [:li
+            [:a {:href "//google.com"} n]])]
+        ]
+       )
+     ]))
+
 
 (def handler
   (params/wrap-params

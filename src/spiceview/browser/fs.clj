@@ -1,6 +1,7 @@
 (ns spiceview.browser.fs
   (:require
    [spiceview.spice.human :as human]
+   [spiceview.browser.collation :as collation]
    [clojure.string :as str]
    )
   (:import java.io.File)
@@ -57,7 +58,16 @@
 
 ;;(ls-juno)
 
-(-> (submodule-contents "JUNO" "ck"))
+(->>
+ (submodule-contents "JUNO" "ck")
+ (map last)
+ (map #(.getName %))
+ (map #(str/split % #"[._]"))
+ (group-by (partial take 3))
+ first
+      ;;(collation/group-by-header)
+ ;;keys
+    )
 
 ;;(file-extension (File. "resources/data/naif.jpl.nasa.gov/pub/naif/JUNO/kernels/ck/aareadme.txt"))
 

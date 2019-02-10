@@ -33,8 +33,15 @@
     (map-function-on-map-vals (group-by (first fs) coll)
                               #(nested-group-by (rest fs) % final-fn))))
 
+(defn third [xs]
+  (nth xs 2))
+
 (defn group-by-header [ss]
-  (nested-group-by [first second] ss (partial mapv last)))
+  ;;(group-by first ss))
+  (nested-group-by [first second] ss
+                   ;;(partial mapv last)
+                   (partial map last)
+                   ))
   ;; (let [ret (reduce (fn [ret x]
   ;;                     (let [k (first x)
   ;;                           v (rest x)]
