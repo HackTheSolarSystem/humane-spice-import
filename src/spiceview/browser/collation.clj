@@ -2,10 +2,12 @@
 
   )
 
-(defn parse-filename [s]
-  "example output"
-  )
+(defn parse-filename [s] )
 
 (defn parse-filenames [s]
+
+  ;; group by extension
+
+  ;; group by first common substring
 
   )
