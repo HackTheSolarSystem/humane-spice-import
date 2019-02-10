@@ -15,10 +15,15 @@
      [:h1 "Juno Mission"]
 
      [:ul
-      (for [k (keys (fs/ls-juno))]
-        [:li k])]
+      (for [[k {:keys [description name file]}] (fs/ls-juno)]
+        [:li [:a {:href (str "/mission/juno/" name)} description]])]
 
      ]
+    ))
+
+(defn submodule-handler [{{submodule :submodule} :params}]
+  (str "this is a submodule: "
+    submodule
     ))
 
 (def handler
@@ -27,7 +32,8 @@
 
       (GET "/" [] "<h1>Hello World</h1>")
 
-      (GET "/juno" [] juno-handler)
+      (GET "/mission/juno" [] juno-handler)
+      (GET "/mission/juno/:submodule" [] submodule-handler)
 
       (route/not-found "<h1>Page not found</h1>")
 

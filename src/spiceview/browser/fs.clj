@@ -2,9 +2,7 @@
  (:require
    [spiceview.spice.human :as human]
    )
-
  (:import java.io.File)
-
  )
 
 (defn my-ls [d]
@@ -18,8 +16,11 @@
 (defn list-submodules [d]
   (->> (.listFiles d)
        (filter #(.isDirectory %))
-       (map #(vector (human/dirtypes (.getName %))
-                     %))
+       (map #(vector
+               (.getName %)
+               {:description (human/dirtypes (.getName %))
+                :name (.getName %)
+                :file %}))
        ;;(sort-by #(.getName (last %)))
        (into {})))
 
