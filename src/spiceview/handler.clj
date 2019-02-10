@@ -16,7 +16,8 @@
 
      [:ul
       (for [[k {:keys [description name file]}] (fs/ls-juno)]
-        [:li [:a {:href (str "/mission/juno/" name)} description]])]
+
+        [:li [:a {:href (str "/mission/JUNO/" name)} description]])]
 
      ]
     ))
@@ -24,13 +25,16 @@
 (defn submodule-handler [{{:keys [mission submodule] } :params}]
   (html
     [:div
-     (format "this is a submodule: %s from mission: %s"
-             submodule
-             mission)
+
+     (format "this is a submodule: %s from mission: %s" submodule mission)
+
      [:h2 "List:"]
      [:ul
       (for [[n f] (fs/submodule-contents mission submodule)]
-        [:li "item"])]]))
+        [:li
+         [:a {:href "//google.com"} n]])]
+     ]
+     ))
 
 (def handler
   (params/wrap-params

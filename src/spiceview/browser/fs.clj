@@ -18,9 +18,15 @@
       (print "- "))
     (println (.getName f))))
 
-(defn list-files [d]
+(defn- file-extension [f]
+  (-> (.getName f)
+      (str/split #"\.")
+      last))
+
+(defn list-data-files [d]
   (->> (.listFiles d)
        (remove #(.isDirectory %))
+       (remove #(= "txt" (file-extension %)))
        (map #(vector (.getName %) %))
        (into {})))
 
@@ -41,15 +47,19 @@
              mission
              "kernels"
              submodule]))]
-    (list-files d)))
+    (list-data-files d)))
 
 (defn ls-juno []
   ;;(my-ls (File. "resources/data/naif.jpl.nasa.gov/pub/naif/JUNO/kernels/"))
   (list-submodules (File. "resources/data/naif.jpl.nasa.gov/pub/naif/JUNO/kernels/"))
   )
 
+
 ;;(ls-juno)
 
-(-> (submodule-contents "JUNO" "ck")
-    ;;(.exists)
-    )
+(-> (submodule-contents "JUNO" "ck"))
+
+;;(file-extension (File. "resources/data/naif.jpl.nasa.gov/pub/naif/JUNO/kernels/ck/aareadme.txt"))
+
+
+;;(str/split "readme.txt" #"\.")
