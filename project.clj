@@ -11,8 +11,21 @@
                  [hiccup "1.0.5"]
                  [compojure "1.6.1"]
 
+                 [midje "1.9.6"]
                  ]
 
-  :plugins [[lein-ring "0.12.4"]]
+  :plugins [
+            [lein-ring "0.12.4"]
+
+            ]
+  :profiles {:dev
+             {:plugins [
+                        [com.jakemccrary/lein-test-refresh "0.23.0"]
+                             ;;[lein-autotest "1.1.0"]
+                        ]
+              :dependencies [
+                 ;;[com.stuartsierra/lazytest "1.1.2"]
+                        ]
+              }}
   :ring {:handler spiceview.handler/handler }
   )
