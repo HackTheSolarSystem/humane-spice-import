@@ -21,10 +21,16 @@
      ]
     ))
 
-(defn submodule-handler [{{submodule :submodule} :params}]
-  (str "this is a submodule: "
-    submodule
-    ))
+(defn submodule-handler [{{:keys [mission submodule] } :params}]
+  (html
+    [:div
+     (format "this is a submodule: %s from mission: %s"
+             submodule
+             mission)
+     [:h2 "List:"]
+     [:ul
+      (for [[n f] (fs/submodule-contents mission submodule)]
+        [:li "item"])]]))
 
 (def handler
   (params/wrap-params
@@ -32,8 +38,8 @@
 
       (GET "/" [] "<h1>Hello World</h1>")
 
-      (GET "/mission/juno" [] juno-handler)
-      (GET "/mission/juno/:submodule" [] submodule-handler)
+      (GET "/mission/JUNO" [] juno-handler)
+      (GET "/mission/:mission/:submodule" [] submodule-handler)
 
       (route/not-found "<h1>Page not found</h1>")
 
