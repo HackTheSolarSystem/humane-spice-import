@@ -11,7 +11,8 @@
                  [hiccup "1.0.5"]
                  [compojure "1.6.1"]
 
-                 [midje "1.9.6"]
+                 [com.rpl/specter "1.1.2"]
+
                  ]
 
   :plugins [
@@ -24,6 +25,7 @@
                              ;;[lein-autotest "1.1.0"]
                         ]
               :dependencies [
+                             [midje "1.9.6"]
                  ;;[com.stuartsierra/lazytest "1.1.2"]
                         ]
               }}

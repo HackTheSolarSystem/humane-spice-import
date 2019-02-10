@@ -1,10 +1,39 @@
 (ns spiceview.browser.collation-test
-(:require [spiceview.browser.collation :as sut :refer [parse-filename parse-filenames]]
+(:require [spiceview.browser.collation :as sut :refer :all]
           [clojure.test :refer :all]
           ;;[midje.sweet :refer :all]
 ))
 
 (deftest
+  header-test
+  (testing "It can find a common header"
+
+     (is (= (group-by-header [["juno" "jade" "v00"]
+                              ["juno" "jade" "v01"]
+                              ["juno" "jedi" "v01"]
+                              ["juno" "jedi" "v01"]])
+            {"juno" {"jade" ["v00"
+                             "v01"]
+                     "jedi" ["v00"
+                             "v01"]}}
+             )
+         )
+
+    ;;(is (= (group-by-header [["jade" "v00"]
+    ;;                         ["jade" "v01"]
+    ;;                         ["jedi" "v01"]
+    ;;                         ["jedi" "v01"]])
+    ;;       {"jade" ["v00"
+    ;;                "v01"]
+    ;;        "jedi" ["v00"
+    ;;                "v01"]}
+
+    ;;        )
+    ;;    )
+    )
+  )
+
+#_(deftest
   ^:test-refresh/focus
   parse-test
   (testing "It can parse homogenous filenames"
